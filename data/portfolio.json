@@ -75,13 +75,18 @@
       "improvements": [
         {
           "id": "radius-search",
-          "title": "반경 검색 API의 응답 시간을 9.7초에서 15ms로 줄이기까지",
-          "summary": "반경 검색 요청이 몰리면 부하 테스트 실패율이 높아졌습니다. 인덱스 적용 방식 5가지를 비교해 기존 DB 구조에 적합한 복합 인덱스를 선택했고, P95 응답 시간을 15ms까지 줄였습니다.",
+          "title": "부하 테스트 실패율 8.9%를 0%로 낮추기까지",
+          "summary": "반경 검색 요청이 몰리면 요청의 8.9%가 실패했습니다. 기존 방식, 복합 인덱스, 공간 인덱스를 비교해 기존 DB 구조에 맞는 복합 인덱스를 선택했고, 실패율 0%와 P95 15ms를 달성했습니다.",
           "tags": [
             "성능",
             "DB"
           ],
           "metrics": [
+            {
+              "label": "실패율",
+              "before": "8.9%",
+              "after": "0%"
+            },
             {
               "label": "Latency P95",
               "before": "9,768ms",
@@ -91,11 +96,6 @@
               "label": "RPS",
               "before": "49.68",
               "after": "95.15"
-            },
-            {
-              "label": "실패율",
-              "before": "20%",
-              "after": "0%"
             }
           ],
           "file": "content/pik-one/improvements/radius-search.md"
