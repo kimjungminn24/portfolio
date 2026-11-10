@@ -87,13 +87,31 @@ const improveHref = (p, it) => `p/${enc(p.id)}/improve/${enc(it.id)}`;
 
 /* pieces */
 
+const metricsBlock = (list) =>
+  list?.length
+    ? `<div class="metrics">${list
+        .map(
+          (m) => `<div class="metric">
+        <div class="metric__label">${esc(m.label)}</div>
+        <div class="metric__vals">
+          ${m.before != null ? `<span class="metric__before">${esc(m.before)}</span>` : ''}
+          <span class="metric__after">${esc(m.after)}</span>
+        </div>
+      </div>`,
+        )
+        .join('')}</div>`
+    : '';
+
 function thumb(p) {
   // 240p shows thumbnail_pixel instead when it exists (theme-pixel.css)
   if (p.thumbnail) return `<img class="thumb--main" src="${esc(p.thumbnail)}" alt="" loading="lazy">${p.thumbnail_pixel ? `<img class="thumb--pixel" src="${esc(p.thumbnail_pixel)}" alt="" loading="lazy">` : ''}`;
   return `<div class="thumb-fallback" aria-hidden="true">${esc((p.title || '?').trim().charAt(0))}</div>`;
 }
 
-const chips = (list) => (list?.length ? `<ul class="chips">${list.map((s) => `<li class="chip">${esc(s)}</li>`).join('')}</ul>` : '');
+const chips = (list, max = Infinity) =>
+  list?.length
+    ? `<ul class="chips">${list.slice(0, max).map((s) => `<li class="chip">${esc(s)}</li>`).join('')}${list.length > max ? `<li class="chip chip--more">+${list.length - max}</li>` : ''}</ul>`
+    : '';
 
 const crumbs = (items) =>
   `<nav class="crumbs" aria-label="Breadcrumb">${items
@@ -115,7 +133,7 @@ function card(p) {
     <div class="card__body">
       <h3 class="card__title">${esc(p.title)}</h3>
       <p class="card__summary">${esc(p.card_summary ?? p.summary)}</p>
-      ${chips(p.stack)}
+      ${chips(p.stack, 4)}
       ${p.period || p.kind ? `<div class="card__meta">${esc([p.period, p.kind].filter(Boolean).join(' · '))}</div>` : ''}
     </div>
   </a>`;
@@ -179,6 +197,12 @@ async function viewProject(p) {
     )
     .join('');
 
+  const aboutBlock = about ? `<section class="block"><h2 class="block__title">${esc(L.about)}</h2><div class="prose">${about}</div></section>` : '';
+  const improveBlock = `<section class="block">
+      <h2 class="block__title">${esc(L.improvements)}</h2>
+      ${improvements ? `<ol class="list">${improvements}</ol>` : `<p class="empty">${esc(L.empty)}</p>`}
+    </section>`;
+
   const html = `
     ${crumbs([[L.home, HOME], [p.title]])}
     <header class="project-head">
@@ -191,14 +215,11 @@ async function viewProject(p) {
         ${p.role ? `<span>${esc(p.role)}</span>` : ''}
       </div>
     </header>
-    ${p.thumbnail ? `<div class="project-hero thumb"><img class="thumb--main" src="${esc(p.thumbnail)}" alt="">${p.thumbnail_pixel ? `<img class="thumb--pixel" src="${esc(p.thumbnail_pixel)}" alt="">` : ''}</div>` : ''}
     ${links ? `<div class="project-links">${links}</div>` : ''}
+    ${metricsBlock(p.highlights)}
+    ${p.thumbnail ? `<div class="project-hero thumb"><img class="thumb--main" src="${esc(p.thumbnail)}" alt="">${p.thumbnail_pixel ? `<img class="thumb--pixel" src="${esc(p.thumbnail_pixel)}" alt="">` : ''}</div>` : ''}
     ${p.stack?.length ? `<section class="block"><h2 class="block__title">${esc(L.stack)}</h2>${chips(p.stack)}</section>` : ''}
-    ${about ? `<section class="block"><h2 class="block__title">${esc(L.about)}</h2><div class="prose">${about}</div></section>` : ''}
-    <section class="block">
-      <h2 class="block__title">${esc(L.improvements)}</h2>
-      ${improvements ? `<ol class="list">${improvements}</ol>` : `<p class="empty">${esc(L.empty)}</p>`}
-    </section>`;
+    ${p.featured ? improveBlock + aboutBlock : aboutBlock + improveBlock}`;
   return { title: p.title, html };
 }
 
@@ -206,19 +227,7 @@ async function viewImprovement(p, it) {
   const list = p.improvements;
   const idx = list.indexOf(it);
   const body = await md(it);
-  const metrics = it.metrics?.length
-    ? `<div class="metrics">${it.metrics
-        .map(
-          (m) => `<div class="metric">
-        <div class="metric__label">${esc(m.label)}</div>
-        <div class="metric__vals">
-          ${m.before != null ? `<span class="metric__before">${esc(m.before)}</span>` : ''}
-          <span class="metric__after">${esc(m.after)}</span>
-        </div>
-      </div>`,
-        )
-        .join('')}</div>`
-    : '';
+  const metrics = metricsBlock(it.metrics);
   const nav = (x) => x && { href: improveHref(p, x), title: x.title };
 
   const html = `

@@ -152,14 +152,15 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.3; }
   border-radius: var(--radius); background: var(--ink); color: var(--bg);
 }
 .project-hero {
-  overflow: hidden; margin-bottom: 20px; aspect-ratio: 16 / 9;
+  overflow: hidden; margin-bottom: 32px; aspect-ratio: 16 / 9; max-height: 260px; width: 100%;
   border: var(--border-w) solid var(--line);
   border-radius: var(--radius);
   background: var(--bg-2);
   box-shadow: var(--shadow);
 }
 .project-hero img { width: 100%; height: 100%; object-fit: cover; }
-.project-links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+.project-links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+.chip--more { opacity: .7; }
 .block { margin-bottom: 40px; }
 .block__title { margin: 0 0 14px; padding-bottom: 8px; font-size: 1.2em; border-bottom: var(--border-w) solid var(--line); }
 
@@ -236,6 +237,8 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.3; }
 .prose th, .prose td { padding: 6px 10px; border: 2px solid var(--line); text-align: left; vertical-align: top; }
 .prose th { background: var(--bg); }
 .prose img { border: var(--border-w) solid var(--line); border-radius: var(--radius); }
+/* diagrams can use the full content width, not just the text column */
+.prose p > img:only-child { width: min(calc(100vw - 40px), calc(var(--max) - 40px)); max-width: none; }
 .prose hr { margin: 2em 0; border: 0; border-top: var(--border-w) dashed var(--line); }
 .prose a { color: var(--accent); }
 .prose mark { padding: .05em .2em; background: var(--mark); color: var(--ink); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
