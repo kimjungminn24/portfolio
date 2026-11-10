@@ -143,19 +143,21 @@ function card(p) {
 // three strengths shown side by side; project names link to the project
 function pillars(list) {
   if (!list?.length) return '';
-  const tag = (it) => `<a class="ptag" href="${esc(it.href)}">${esc(it.project)}</a>`;
-  const item = (it) => {
-    if (it.after != null) {
-      return `<li class="pillar__row">${tag(it)}<span class="pillar__vals">${it.before != null ? `<s>${esc(it.before)}</s><span aria-hidden="true">→</span>` : ''}<strong>${esc(it.after)}</strong></span>${it.note ? `<span class="pillar__note">${esc(it.note)}</span>` : ''}</li>`;
-    }
-    return `<li class="pillar__row pillar__row--text">${tag(it)}${it.text ? `<span class="pillar__desc">${esc(it.text)}</span>` : ''}</li>`;
+  const row = (it) => {
+    const parts = [
+      it.project && (it.href ? `<a class="ptag" href="${esc(it.href)}">${esc(it.project)}</a>` : `<span class="ptag">${esc(it.project)}</span>`),
+      it.label && `<span class="pillar__label">${esc(it.label)}</span>`,
+      it.text && `<span class="pillar__desc">${esc(it.text)}</span>`,
+      it.after != null && `<span class="pillar__vals">${it.before != null ? `<s>${esc(it.before)}</s><span aria-hidden="true">→</span>` : ''}<strong>${esc(it.after)}</strong></span>`,
+    ].filter(Boolean);
+    return `<li class="pillar__row">${parts.join('')}</li>`;
   };
   return `<div class="pillars">${list
     .map(
       (p, i) => `<section class="pillar" style="--i:${i}">
         <div class="pillar__head"><span class="pillar__no">${String(i + 1).padStart(2, '0')}</span><h2 class="pillar__title">${esc(p.title)}</h2></div>
         ${p.text ? `<p class="pillar__text">${esc(p.text)}</p>` : ''}
-        ${p.items?.length ? `<ul class="pillar__items">${p.items.map(item).join('')}</ul>` : ''}
+        ${p.items?.length ? `<ul class="pillar__items">${p.items.map(row).join('')}</ul>` : ''}
       </section>`,
     )
     .join('')}</div>`;

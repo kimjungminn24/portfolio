@@ -29,69 +29,70 @@
     "pillars": [
       {
         "title": "주도성",
-        "text": "불편한 게 보이면 직접 만들었습니다.",
+        "text": "불편하면 직접 만듭니다.",
         "items": [
           {
             "project": "단독 스팟",
             "href": "p/pik-one",
-            "text": "카페 글과 스크린샷으로 흩어져 있던 피크민 블룸 스팟 정보를 지도에서 검색하는 서비스로 만들었습니다."
+            "text": "흩어진 스팟 정보를 지도 하나로"
           },
           {
             "project": "pixel-duet",
             "href": "p/pixel-duet",
-            "text": "AI와 픽셀 그림을 함께 그리고 싶어서, 그리는 중에도 사람이 고치고 이어 그릴 수 있는 캔버스를 만들었습니다."
+            "text": "AI와 함께 그리는 픽셀 캔버스"
           }
         ]
       },
       {
         "title": "성능 최적화",
-        "text": "느린 곳은 숫자로 확인하고 빠르게 바꿨습니다.",
+        "text": "느린 곳은 측정하고 고칩니다.",
         "items": [
           {
             "project": "단독 스팟",
             "href": "p/pik-one/improve/radius-search",
+            "label": "실패율",
             "before": "약 20%",
-            "after": "0%",
-            "note": "부하 테스트 실패율"
+            "after": "0%"
           },
           {
             "project": "CO:RE",
             "href": "p/core/improve/scheduled-aggregation",
+            "label": "통계 응답",
             "before": "14.7초",
-            "after": "약 1초",
-            "note": "통계 API 응답"
+            "after": "약 1초"
           },
           {
             "project": "Egg In Health",
             "href": "p/egg-in-health/improve/ehcache",
+            "label": "조회 응답",
             "before": "30초",
-            "after": "16.15ms",
-            "note": "기록 조회 응답"
+            "after": "16.15ms"
           },
           {
             "project": "pixel-duet",
             "href": "p/pixel-duet/improve/token-saving",
+            "label": "토큰",
             "before": "10,064개",
-            "after": "25개",
-            "note": "원 하나 그리는 토큰"
+            "after": "25개"
           }
         ]
       },
       {
         "title": "지속적인 개선",
-        "text": "단독 스팟을 2025년 6월부터 혼자 운영하고 있습니다. 하루 평균 800명 이상이 방문하고, 받은 의견을 반영하며 100개가 넘는 PR을 올렸습니다.",
+        "text": "만든 뒤에도 1년 넘게 꾸준히 고치고 있습니다.",
         "items": [
           {
             "project": "단독 스팟",
             "href": "p/pik-one",
-            "after": "800명+",
-            "note": "하루 평균 방문자"
+            "text": "2025.06부터 운영"
           },
           {
-            "project": "단독 스팟",
-            "href": "https://github.com/kimjungminn24/pik-one/pulls?q=is%3Apr+is%3Aclosed",
-            "after": "PR 100개+",
-            "note": "2025.06 ~ 현재"
+            "label": "하루 평균 방문자",
+            "after": "800명+"
+          },
+          {
+            "label": "올린 PR",
+            "after": "100개+"
           }
         ]
       }
