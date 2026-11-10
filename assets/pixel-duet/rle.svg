@@ -182,4 +182,4 @@
 <text x="578" y="178" font-size="12" fill="#1c2024">y7: 4*20</text>
 <line x1="30" y1="200" x2="870" y2="200" stroke="#e6e8eb"/>
 <text x="30" y="228" font-size="13" fill="#1c2024"><tspan fill="#e5484d" font-weight="700">1*8</tspan> 은 빨강이 8칸 이어진다는 뜻이고, <tspan fill="#3e63dd" font-weight="700">y4-6:</tspan> 은 4~6번째 줄이 같다는 뜻이에요</text>
-<text x="30" y="252" font-size="13" fill="#60646c">실제 128×128 개구리 그림은 16,512자에서 3,760자로 줄었어요</text></svg>
+<text x="30" y="252" font-size="13" fill="#60646c">128×128 개구리 그림: 글자 수는 16,512자에서 3,760자로 줄었지만, 토큰은 2,651개에서 2,548개로 거의 그대로였어요</text></svg>

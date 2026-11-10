@@ -175,11 +175,12 @@
         {
           "id": "token-saving",
           "title": "모델과 주고받는 토큰 줄이기",
-          "summary": "RLE 압축 알고리즘으로 캔버스 읽기 응답을 압축하고 도형은 좌표 몇 개만 받게 해서, 128×128 그림을 읽는 응답을 4분의 1 아래로 줄였어요",
+          "summary": "도형을 좌표 몇 개로 그리게 바꿔서 원 하나 그리는 데 드는 토큰을 10,064개에서 25개로 줄였어요. RLE 압축은 재 보니 토큰이 거의 안 줄어서 이유를 따로 정리했어요",
           "tags": ["성능", "MCP", "RLE"],
           "metrics": [
-            { "label": "read_pixels 응답", "before": "16,512자", "after": "3,760자" },
-            { "label": "채운 원 그리기", "before": "픽셀 수백 개", "after": "숫자 4개" }
+            { "label": "채운 원 그리기 토큰", "before": "10,064", "after": "25" },
+            { "label": "read_pixels 글자 수", "before": "16,512자", "after": "3,760자" },
+            { "label": "read_pixels 토큰", "before": "2,651", "after": "2,548" }
           ],
           "file": "content/pixel-duet/improvements/token-saving.md"
         }
