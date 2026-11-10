@@ -226,46 +226,6 @@
       "card_summary": "트레이너와 회원을 위한 건강 관리 플랫폼입니다. 식단과 운동 기록, 스케줄 관리 등 SNS에 흩어져 있던 PT 관리 기능을 하나로 모았습니다."
     },
     {
-      "id": "pixel-portfolio",
-      "type": "opensource",
-      "title": "pixel-portfolio",
-      "summary": "JSON 파일 하나와 Markdown 문서로 구성하는 픽셀 컨셉 포트폴리오 템플릿입니다.",
-      "thumbnail": "assets/thumbs/pixel-portfolio-4k.svg",
-      "thumbnail_pixel": "assets/thumbs/pixel-portfolio.svg",
-      "repo": "https://github.com/kimjungminn24/pixel-portfolio",
-      "demo": "https://kimjungminn24.github.io/pixel-portfolio/",
-      "stack": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
-      "period": "2026.09 ~",
-      "role": "기획 및 개발 · 외부 라이브러리와 빌드 의존성 없음",
-      "improvements": [],
-      "kind": "개인 프로젝트",
-      "aboutFile": "content/pixel-portfolio/about.md",
-      "card_summary": "JSON 파일 하나와 Markdown 문서로 구성하는 픽셀 컨셉 포트폴리오 템플릿입니다. 별도 빌드 도구 없이 배포할 수 있고, 240p와 4K 화면을 전환할 수 있습니다."
-    },
-    {
-      "id": "cute-readme",
-      "type": "opensource",
-      "title": "cute-readme",
-      "summary": "GitHub 프로필 README를 블록 단위로 꾸미고 결과물을 내보낼 수 있는 픽셀 도구 모음입니다.",
-      "repo": "https://github.com/kimjungminn24/cute-readme",
-      "demo": "https://kimjungminn24.github.io/cute-readme/",
-      "stack": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "SVG"
-      ],
-      "role": "기획 및 개발",
-      "improvements": [],
-      "kind": "개인 프로젝트",
-      "aboutFile": "content/cute-readme/about.md",
-      "card_summary": "GitHub 프로필 README를 블록 단위로 꾸미고 내보낼 수 있는 픽셀 도구입니다. 미니룸 에디터와 README 빌더 등을 만들었습니다."
-    },
-    {
       "id": "pixel-duet",
       "type": "opensource",
       "title": "pixel-duet",
@@ -322,6 +282,27 @@
       "card_summary": "AI와 사람이 브라우저에서 번갈아 픽셀을 그리며 작업하는 협업 캔버스입니다. MCP를 통해 AI가 직접 캔버스를 읽고 수정할 수 있습니다."
     },
     {
+      "id": "pixel-portfolio",
+      "type": "opensource",
+      "title": "pixel-portfolio",
+      "summary": "JSON 파일 하나와 Markdown 문서로 구성하는 픽셀 컨셉 포트폴리오 템플릿입니다.",
+      "thumbnail": "assets/thumbs/pixel-portfolio-4k.svg",
+      "thumbnail_pixel": "assets/thumbs/pixel-portfolio.svg",
+      "repo": "https://github.com/kimjungminn24/pixel-portfolio",
+      "demo": "https://kimjungminn24.github.io/pixel-portfolio/",
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "period": "2026.09 ~",
+      "role": "기획 및 개발 · 외부 라이브러리와 빌드 의존성 없음",
+      "improvements": [],
+      "kind": "개인 프로젝트",
+      "aboutFile": "content/pixel-portfolio/about.md",
+      "card_summary": "JSON 파일 하나와 Markdown 문서로 구성하는 픽셀 컨셉 포트폴리오 템플릿입니다. 별도 빌드 도구 없이 배포할 수 있고, 240p와 4K 화면을 전환할 수 있습니다."
+    },
+    {
       "id": "issue-to-markdown",
       "type": "opensource",
       "title": "issue-to-markdown",
@@ -336,6 +317,25 @@
       "kind": "오픈소스 기여",
       "aboutFile": "content/issue-to-markdown/about.md",
       "card_summary": "GitHub 이슈를 Markdown 파일로 변환하는 GitHub Action입니다. 이미지 변환 과정에서 발생하던 오류를 수정하는 데 기여했습니다."
+    },
+    {
+      "id": "cute-readme",
+      "type": "opensource",
+      "title": "cute-readme",
+      "summary": "GitHub 프로필 README를 블록 단위로 꾸미고 결과물을 내보낼 수 있는 픽셀 도구 모음입니다.",
+      "repo": "https://github.com/kimjungminn24/cute-readme",
+      "demo": "https://kimjungminn24.github.io/cute-readme/",
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "SVG"
+      ],
+      "role": "기획 및 개발",
+      "improvements": [],
+      "kind": "개인 프로젝트",
+      "aboutFile": "content/cute-readme/about.md",
+      "card_summary": "GitHub 프로필 README를 블록 단위로 꾸미고 내보낼 수 있는 픽셀 도구입니다. 미니룸 에디터와 README 빌더 등을 만들었습니다."
     }
   ]
 }
