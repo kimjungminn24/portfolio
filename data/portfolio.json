@@ -18,15 +18,12 @@
   },
   "labels": {
     "nav_home": "홈",
-    "nav_logs": "개발기록",
     "home": "홈",
     "repo": "저장소",
     "demo": "서비스 보기",
     "stack": "기술 스택",
     "about": "소개",
     "improvements": "개선사항",
-    "logs": "개발기록",
-    "all_logs": "개발기록 전체",
     "more": "자세히 보기",
     "prev": "이전",
     "next": "다음",
@@ -57,9 +54,9 @@
           "summary": "인덱스 방식 5가지를 가설로 세워 비교하고 복합 인덱스를 선택해 부하 테스트 실패율을 0%로 낮췄어요",
           "tags": ["성능", "DB"],
           "metrics": [
-            { "label": "Latency P95", "before": "9,768ms", "after": "12ms" },
-            { "label": "RPS", "before": "49.68", "after": "95.06" },
-            { "label": "실패율", "before": "20%", "after": "0%" }
+            { "label": "Latency P95", "before": "9,768ms", "after": "15ms" },
+            { "label": "RPS", "before": "49.68", "after": "95.15" },
+            { "label": "실패율", "before": "8.9%", "after": "0%" }
           ],
           "file": "content/pik-one/improvements/radius-search.md"
         },
@@ -84,8 +81,7 @@
           ],
           "file": "content/pik-one/improvements/lighthouse.md"
         }
-      ],
-      "logs": []
+      ]
     },
     {
       "id": "core",
@@ -109,8 +105,7 @@
           ],
           "file": "content/core/improvements/scheduled-aggregation.md"
         }
-      ],
-      "logs": []
+      ]
     },
     {
       "id": "egg-in-health",
@@ -134,8 +129,7 @@
           ],
           "file": "content/egg-in-health/improvements/ehcache.md"
         }
-      ],
-      "logs": []
+      ]
     },
     {
       "id": "pixel-portfolio",
@@ -150,8 +144,7 @@
       "period": "2026.09 ~",
       "role": "기획 및 개발 · 의존성 없음",
       "about": "빌드 없이 어떤 정적 호스트에나 올릴 수 있는 포트폴리오 템플릿이에요. 작은 클라이언트 라우터가 프로젝트 목록, 개선사항, 개발기록을 그리고, 240p 모드에서는 픽셀 폰트와 부팅 화면이 나와요. 지금 보고 있는 이 사이트도 이 템플릿으로 만들었어요.\n\n- 데이터: `data/portfolio.json` 하나와 `content/` 아래 마크다운\n- 테마: 색, 글꼴, 모서리, 그림자는 전부 CSS 변수\n- 검사: `npm run check` 가 중복 id, 없는 파일, 잘못된 날짜를 잡아요",
-      "improvements": [],
-      "logs": []
+      "improvements": []
     },
     {
       "id": "cute-readme",
@@ -163,8 +156,7 @@
       "stack": ["HTML", "CSS", "JavaScript", "SVG"],
       "role": "기획 및 개발",
       "about": "깃허브 프로필을 작은 픽셀 집처럼 꾸미는 도구예요. 미니룸 에디터, 블록으로 쌓는 리드미 빌더, 링크 뱃지, 저장소 카드, 기여자 그래프가 들어 있어요. 블록을 끌어서 순서를 바꾸고 `Download README.md` 를 누르면 그림까지 zip 으로 받을 수 있어요.",
-      "improvements": [],
-      "logs": []
+      "improvements": []
     },
     {
       "id": "pixel-duet",
@@ -175,8 +167,7 @@
       "stack": ["Go", "MCP", "JavaScript"],
       "role": "기획 및 개발",
       "about": "모델과 사람이 함께 쓰는 픽셀 캔버스예요. 모델이 브라우저에 한 획씩 그리는 동안 지켜보다가, 멈추고 붓을 가져가 고치고 메모를 남긴 뒤 붓을 돌려줘요. 모델은 다음 획의 응답으로 사람이 한 일을 알게 돼요.\n\n- Go 로 만든 단일 바이너리. `npx -y pixelduet` 또는 `go install` 로 설치\n- stdio 위의 MCP 서버라 Claude Code, Codex CLI 등 어떤 MCP 클라이언트와도 연결\n- 그리기, 셰이딩, 디더링, 스프라이트 갤러리, 채팅 도구 제공",
-      "improvements": [],
-      "logs": []
+      "improvements": []
     },
     {
       "id": "issue-to-markdown",
@@ -187,8 +178,7 @@
       "stack": ["GitHub Actions", "TypeScript"],
       "role": "기여자 · 이미지 변환 오류 해결",
       "about": "GitHub 이슈를 Markdown 파일로 변환해 저장소에 커밋해 주는 GitHub Action 이에요. 이슈 본문의 이미지가 Markdown 으로 변환될 때 깨지는 오류를 찾아 고쳐서 기여했어요.",
-      "improvements": [],
-      "logs": []
+      "improvements": []
     }
   ]
 }
