@@ -159,7 +159,7 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.3; }
 .block { margin-bottom: 40px; }
 .block__title { margin: 0 0 14px; padding-bottom: 8px; font-size: 1.2em; border-bottom: var(--border-w) solid var(--line); }
 
-/* lists (improvements / logs) */
+/* lists (improvements) */
 .list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .item {
   display: flex; gap: 14px; align-items: flex-start;
@@ -236,11 +236,6 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.3; }
 .prose a { color: var(--accent); }
 .prose mark { padding: .05em .2em; background: var(--mark); color: var(--ink); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 
-/* logs page */
-.log-group { margin-bottom: 36px; }
-.log-group__title { margin: 0 0 10px; font-size: 1.05em; }
-.log-group__title a { text-decoration: none; }
-.log-group__title a:hover { text-decoration: underline; }
 
 .empty, .loading, .error {
   padding: 28px; text-align: center; color: var(--ink-2);
