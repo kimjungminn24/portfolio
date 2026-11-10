@@ -284,27 +284,6 @@
       "thumbnail_pixel": "assets/thumbs/pixel-duet-px.svg"
     },
     {
-      "id": "pixel-portfolio",
-      "type": "opensource",
-      "title": "pixel-portfolio",
-      "summary": "JSON 파일 하나와 Markdown 문서로 구성하는 픽셀 컨셉 포트폴리오 템플릿입니다.",
-      "thumbnail": "assets/thumbs/pixel-portfolio-4k.svg",
-      "thumbnail_pixel": "assets/thumbs/pixel-portfolio.svg",
-      "repo": "https://github.com/kimjungminn24/pixel-portfolio",
-      "demo": "https://kimjungminn24.github.io/pixel-portfolio/",
-      "stack": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
-      "period": "2026.09 ~",
-      "role": "기획 및 개발 · 외부 라이브러리와 빌드 의존성 없음",
-      "improvements": [],
-      "kind": "개인 프로젝트",
-      "aboutFile": "content/pixel-portfolio/about.md",
-      "card_summary": "JSON 파일 하나와 Markdown 문서로 구성하는 픽셀 컨셉 포트폴리오 템플릿입니다. 별도 빌드 도구 없이 배포할 수 있고, 240p와 4K 화면을 전환할 수 있습니다."
-    },
-    {
       "id": "issue-to-markdown",
       "type": "opensource",
       "title": "issue-to-markdown",
