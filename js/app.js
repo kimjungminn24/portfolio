@@ -170,12 +170,16 @@ function viewHome() {
   const hero = `<section class="hero">
     ${s.avatar ? `<div class="hero__avatar thumb"><img class="avatar avatar--main" src="${esc(s.avatar)}" alt="">${s.avatar_pixel ? `<img class="avatar avatar--pixel" src="${esc(s.avatar_pixel)}" alt="">` : ''}</div>` : ''}
     <div>
-      ${s.eyebrow ? `<p class="hero__eyebrow">${esc(s.eyebrow)}</p>` : ''}
-      <h1 class="hero__name">${esc(s.owner)}</h1>
+      <div class="hero__top">
+        <div>
+          ${s.eyebrow ? `<p class="hero__eyebrow">${esc(s.eyebrow)}</p>` : ''}
+          <h1 class="hero__name">${esc(s.owner)}</h1>
+        </div>
+        ${s.links?.length ? `<div class="hero__links">${s.links.map((l) => link(l.url, l.label, 'btn')).join('')}</div>` : ''}
+      </div>
       ${s.tagline ? `<p class="hero__tagline">${esc(s.tagline)}</p>` : ''}
       ${s.intro ? s.intro.split(/\n{2,}/).map((t) => `<p class="hero__intro">${esc(t)}</p>`).join('') : ''}
       ${pillars(s.pillars)}
-      ${s.links?.length ? `<div class="hero__links">${s.links.map((l) => link(l.url, l.label, 'btn')).join('')}</div>` : ''}
     </div>
   </section>`;
 
