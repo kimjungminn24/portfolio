@@ -279,7 +279,9 @@
       ],
       "kind": "개인 프로젝트",
       "aboutFile": "content/pixel-duet/about.md",
-      "card_summary": "AI와 사람이 브라우저에서 번갈아 픽셀을 그리며 작업하는 협업 캔버스입니다. MCP를 통해 AI가 직접 캔버스를 읽고 수정할 수 있습니다."
+      "card_summary": "AI와 사람이 브라우저에서 번갈아 픽셀을 그리며 작업하는 협업 캔버스입니다. MCP를 통해 AI가 직접 캔버스를 읽고 수정할 수 있습니다.",
+      "thumbnail": "assets/thumbs/pixel-duet-4k.svg",
+      "thumbnail_pixel": "assets/thumbs/pixel-duet-px.svg"
     },
     {
       "id": "pixel-portfolio",
@@ -316,7 +318,9 @@
       "improvements": [],
       "kind": "오픈소스 기여",
       "aboutFile": "content/issue-to-markdown/about.md",
-      "card_summary": "GitHub 이슈를 Markdown 파일로 변환하는 GitHub Action입니다. 이미지 변환 과정에서 발생하던 오류를 수정하는 데 기여했습니다."
+      "card_summary": "GitHub 이슈를 Markdown 파일로 변환하는 GitHub Action입니다. 이미지 변환 과정에서 발생하던 오류를 수정하는 데 기여했습니다.",
+      "thumbnail": "assets/thumbs/issue-to-markdown-4k.svg",
+      "thumbnail_pixel": "assets/thumbs/issue-to-markdown-px.svg"
     },
     {
       "id": "cute-readme",
@@ -335,7 +339,9 @@
       "improvements": [],
       "kind": "개인 프로젝트",
       "aboutFile": "content/cute-readme/about.md",
-      "card_summary": "GitHub 프로필 README를 블록 단위로 꾸미고 내보낼 수 있는 픽셀 도구입니다. 미니룸 에디터와 README 빌더 등을 만들었습니다."
+      "card_summary": "GitHub 프로필 README를 블록 단위로 꾸미고 내보낼 수 있는 픽셀 도구입니다. 미니룸 에디터와 README 빌더 등을 만들었습니다.",
+      "thumbnail": "assets/thumbs/cute-readme-4k.svg",
+      "thumbnail_pixel": "assets/thumbs/cute-readme-px.svg"
     }
   ]
 }

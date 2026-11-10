@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 320 200" role="img" aria-label="issue-to-markdown">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c2f5c"/><stop offset="1" stop-color="#474b8f"/></linearGradient>
+  <filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/></filter>
+</defs>
+<rect width="320" height="200" fill="url(#bg)"/>
+<g transform="translate(22 40)" filter="url(#sh)">
+  <rect width="118" height="120" rx="10" fill="#fff"/>
+  <path d="M0 10a10 10 0 0 1 10-10h98a10 10 0 0 1 10 10v12H0z" fill="#e9e4da"/>
+  <circle cx="26" cy="50" r="11" fill="none" stroke="#2da44e" stroke-width="4"/><circle cx="26" cy="50" r="3.5" fill="#2da44e"/>
+  <rect x="46" y="46" width="56" height="8" rx="4" fill="#222034"/>
+  <rect x="16" y="76" width="86" height="6" rx="3" fill="#dcd6c8"/>
+  <rect x="16" y="90" width="64" height="6" rx="3" fill="#dcd6c8"/>
+</g>
+<path d="M150 100 h22 m-9 -10 l11 10 l-11 10" fill="none" stroke="#ffd166" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="translate(190 30)" filter="url(#sh)">
+  <path d="M0 8a8 8 0 0 1 8-8h70l30 30v102a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8z" fill="#fff"/>
+  <path d="M78 0v22a8 8 0 0 0 8 8h22z" fill="#dcd6c8"/>
+  <path d="M20 78V48l14 16 14-16v30" fill="none" stroke="#222034" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M68 50v24m-9 -9l9 9 9-9" fill="none" stroke="#222034" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="20" y="96" width="68" height="6" rx="3" fill="#dcd6c8"/>
+  <rect x="20" y="110" width="50" height="6" rx="3" fill="#dcd6c8"/>
+</g>
+</svg>
