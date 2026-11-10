@@ -5,15 +5,12 @@ const DATA_URL = 'data/portfolio.json';
 
 const DEFAULT_LABELS = {
   nav_home: 'Home',
-  nav_logs: 'Dev log',
   home: 'Home',
   repo: 'Repository',
   demo: 'Live site',
   stack: 'Stack',
   about: 'About',
   improvements: 'Improvements',
-  logs: 'Dev log',
-  all_logs: 'All dev logs',
   more: 'Read more',
   prev: 'Previous',
   next: 'Next',
@@ -61,7 +58,7 @@ async function md(entry) {
   return renderMarkdown(entry.body ?? '');
 }
 
-/* routes: /, /logs, /p/:id, /p/:id/improve/:iid, /p/:id/log/:lid */
+/* routes: /, /p/:id, /p/:id/improve/:iid */
 
 const BASE_PATH = new URL(document.baseURI).pathname;   // '/' or '/repo-name/'
 
@@ -74,23 +71,18 @@ function parseRoute() {
     return { name: '404' };   // bad percent-encoding
   }
   if (!parts.length) return { name: 'home' };
-  if (parts[0] === 'logs' && parts.length === 1) return { name: 'logs' };
   if (parts[0] === 'p' && parts[1]) {
     if (parts.length === 2) return { name: 'project', id: parts[1] };
     if (parts.length === 4 && parts[2] === 'improve') return { name: 'improvement', id: parts[1], iid: parts[3] };
-    if (parts.length === 4 && parts[2] === 'log') return { name: 'log', id: parts[1], lid: parts[3] };
   }
   return { name: '404' };
 }
 
 const findProject = (id) => data.projects.find((p) => p.id === id);
-const logId = (l) => l.id ?? l.date;
-const sortLogs = (logs) => [...logs].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 const typeLabel = (p) => data.site.sections.find((s) => s.type === p.type)?.label ?? p.type;
 const HOME = './';
 const projectHref = (p) => `p/${enc(p.id)}`;   // relative to <base>
 const improveHref = (p, it) => `p/${enc(p.id)}/improve/${enc(it.id)}`;
-const logHref = (p, l) => `p/${enc(p.id)}/log/${enc(logId(l))}`;
 
 /* pieces */
 
@@ -128,17 +120,6 @@ function card(p) {
   </a>`;
 }
 
-function logItem(p, l) {
-  return `<li>
-    <a class="item" href="${logHref(p, l)}">
-      <span class="item__date">${esc(l.date)}</span>
-      <span class="item__main">
-        <h3 class="item__title">${esc(l.title)}</h3>
-        ${l.summary ? `<p class="item__summary">${esc(l.summary)}</p>` : ''}
-      </span>
-    </a>
-  </li>`;
-}
 
 /* views */
 
@@ -194,7 +175,6 @@ async function viewProject(p) {
     </li>`,
     )
     .join('');
-  const logs = sortLogs(p.logs ?? []).map((l) => logItem(p, l)).join('');
 
   const html = `
     ${crumbs([[L.home, HOME], [p.title]])}
@@ -214,10 +194,6 @@ async function viewProject(p) {
     <section class="block">
       <h2 class="block__title">${esc(L.improvements)}</h2>
       ${improvements ? `<ol class="list">${improvements}</ol>` : `<p class="empty">${esc(L.empty)}</p>`}
-    </section>
-    <section class="block">
-      <h2 class="block__title">${esc(L.logs)}</h2>
-      ${logs ? `<ul class="list">${logs}</ul>` : `<p class="empty">${esc(L.empty)}</p>`}
     </section>`;
   return { title: p.title, html };
 }
@@ -254,41 +230,6 @@ async function viewImprovement(p, it) {
   return { title: `${it.title} - ${p.title}`, html };
 }
 
-async function viewLog(p, l) {
-  const list = sortLogs(p.logs);
-  const idx = list.indexOf(l);
-  const body = await md(l);
-  const nav = (x) => x && { href: logHref(p, x), title: `${x.date} ${x.title}` };
-
-  const html = `
-    ${crumbs([[L.home, HOME], [p.title, projectHref(p)], [L.logs]])}
-    <header class="article-head">
-      <h1>${esc(l.title)}</h1>
-      <p class="article-head__meta"><time datetime="${esc(l.date)}">${esc(l.date)}</time>${l.summary ? `, ${esc(l.summary)}` : ''}</p>
-      ${chips(l.tags)}
-    </header>
-    <article class="prose">${body}</article>
-    ${pager(nav(list[idx + 1]), nav(list[idx - 1]))}`;
-  return { title: `${l.title} - ${p.title}`, html };
-}
-
-function viewLogs() {
-  const groups = data.projects
-    .filter((p) => p.logs?.length)
-    .map(
-      (p) => `<section class="log-group">
-      <h2 class="log-group__title"><a href="${projectHref(p)}">${esc(p.title)}</a></h2>
-      <ul class="list">${sortLogs(p.logs).map((l) => logItem(p, l)).join('')}</ul>
-    </section>`,
-    )
-    .join('');
-  const html = `
-    ${crumbs([[L.home, HOME], [L.all_logs]])}
-    <header class="article-head"><h1>${esc(L.all_logs)}</h1></header>
-    ${groups || `<p class="empty">${esc(L.empty)}</p>`}`;
-  return { title: L.all_logs, html };
-}
-
 const view404 = () => ({
   title: L.not_found,
   html: `<section class="notfound">
@@ -303,17 +244,11 @@ function resolve(route) {
   switch (route.name) {
     case 'home':
       return viewHome();
-    case 'logs':
-      return viewLogs();
     case 'project':
       return p ? viewProject(p) : view404();
     case 'improvement': {
       const it = p?.improvements?.find((x) => x.id === route.iid);
       return it ? viewImprovement(p, it) : view404();
-    }
-    case 'log': {
-      const l = p?.logs?.find((x) => logId(x) === route.lid);
-      return l ? viewLog(p, l) : view404();
     }
     default:
       return view404();
@@ -369,7 +304,6 @@ async function main() {
   document.title = data.site.title;
   document.getElementById('site-logo').textContent = data.site.title;
   document.querySelector('[data-nav="home"]').textContent = L.nav_home;
-  document.querySelector('[data-nav="logs"]').textContent = L.nav_logs;
   document.getElementById('site-footer').innerHTML = data.site.footer ? renderMarkdown(data.site.footer) : '';
   document.dispatchEvent(new Event('portfolio:ready'));   // boot.js waits for this
 
