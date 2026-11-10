@@ -5,16 +5,14 @@ const DATA_URL = 'data/portfolio.json';
 
 const DEFAULT_LABELS = {
   nav_home: 'Home',
-  nav_logs: 'Dev log',
   home: 'Home',
   repo: 'Repository',
   demo: 'Live site',
   stack: 'Stack',
   about: 'About',
   improvements: 'Improvements',
-  logs: 'Dev log',
-  all_logs: 'All dev logs',
   more: 'Read more',
+  featured: 'Featured',
   prev: 'Previous',
   next: 'Next',
   empty: 'Nothing here yet',
@@ -61,7 +59,7 @@ async function md(entry) {
   return renderMarkdown(entry.body ?? '');
 }
 
-/* routes: /, /logs, /p/:id, /p/:id/improve/:iid, /p/:id/log/:lid */
+/* routes: /, /p/:id, /p/:id/improve/:iid */
 
 const BASE_PATH = new URL(document.baseURI).pathname;   // '/' or '/repo-name/'
 
@@ -74,25 +72,35 @@ function parseRoute() {
     return { name: '404' };   // bad percent-encoding
   }
   if (!parts.length) return { name: 'home' };
-  if (parts[0] === 'logs' && parts.length === 1) return { name: 'logs' };
   if (parts[0] === 'p' && parts[1]) {
     if (parts.length === 2) return { name: 'project', id: parts[1] };
     if (parts.length === 4 && parts[2] === 'improve') return { name: 'improvement', id: parts[1], iid: parts[3] };
-    if (parts.length === 4 && parts[2] === 'log') return { name: 'log', id: parts[1], lid: parts[3] };
   }
   return { name: '404' };
 }
 
 const findProject = (id) => data.projects.find((p) => p.id === id);
-const logId = (l) => l.id ?? l.date;
-const sortLogs = (logs) => [...logs].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 const typeLabel = (p) => data.site.sections.find((s) => s.type === p.type)?.label ?? p.type;
 const HOME = './';
 const projectHref = (p) => `p/${enc(p.id)}`;   // relative to <base>
 const improveHref = (p, it) => `p/${enc(p.id)}/improve/${enc(it.id)}`;
-const logHref = (p, l) => `p/${enc(p.id)}/log/${enc(logId(l))}`;
 
 /* pieces */
+
+const metricsBlock = (list) =>
+  list?.length
+    ? `<div class="metrics">${list
+        .map(
+          (m) => `<div class="metric">
+        <div class="metric__label">${esc(m.label)}</div>
+        <div class="metric__vals">
+          ${m.before != null ? `<span class="metric__before">${esc(m.before)}</span>` : ''}
+          <span class="metric__after">${esc(m.after)}</span>
+        </div>
+      </div>`,
+        )
+        .join('')}</div>`
+    : '';
 
 function thumb(p) {
   // 240p shows thumbnail_pixel instead when it exists (theme-pixel.css)
@@ -100,7 +108,10 @@ function thumb(p) {
   return `<div class="thumb-fallback" aria-hidden="true">${esc((p.title || '?').trim().charAt(0))}</div>`;
 }
 
-const chips = (list) => (list?.length ? `<ul class="chips">${list.map((s) => `<li class="chip">${esc(s)}</li>`).join('')}</ul>` : '');
+const chips = (list, max = Infinity) =>
+  list?.length
+    ? `<ul class="chips">${list.slice(0, max).map((s) => `<li class="chip">${esc(s)}</li>`).join('')}${list.length > max ? `<li class="chip chip--more">+${list.length - max}</li>` : ''}</ul>`
+    : '';
 
 const crumbs = (items) =>
   `<nav class="crumbs" aria-label="Breadcrumb">${items
@@ -121,23 +132,35 @@ function card(p) {
     <div class="card__thumb thumb">${thumb(p)}</div>
     <div class="card__body">
       <h3 class="card__title">${esc(p.title)}</h3>
-      <p class="card__summary">${esc(p.summary)}</p>
-      ${chips(p.stack)}
-      ${p.period ? `<div class="card__meta">${esc(p.period)}</div>` : ''}
+      <p class="card__summary">${esc(p.card_summary ?? p.summary)}</p>
+      ${chips(p.stack, 4)}
+      ${p.period || p.kind ? `<div class="card__meta">${esc([p.period, p.kind].filter(Boolean).join(' · '))}</div>` : ''}
     </div>
   </a>`;
 }
 
-function logItem(p, l) {
-  return `<li>
-    <a class="item" href="${logHref(p, l)}">
-      <span class="item__date">${esc(l.date)}</span>
-      <span class="item__main">
-        <h3 class="item__title">${esc(l.title)}</h3>
-        ${l.summary ? `<p class="item__summary">${esc(l.summary)}</p>` : ''}
-      </span>
-    </a>
-  </li>`;
+
+// three strengths shown side by side; project names link to the project
+function pillars(list) {
+  if (!list?.length) return '';
+  const row = (it) => {
+    const parts = [
+      it.project && (it.href ? `<a class="ptag" href="${esc(it.href)}">${esc(it.project)}</a>` : `<span class="ptag">${esc(it.project)}</span>`),
+      it.label && `<span class="pillar__label">${esc(it.label)}</span>`,
+      it.text && `<span class="pillar__desc">${esc(it.text)}</span>`,
+      it.after != null && `<span class="pillar__vals">${it.before != null ? `<s>${esc(it.before)}</s><span aria-hidden="true">→</span>` : ''}<strong>${esc(it.after)}</strong></span>`,
+    ].filter(Boolean);
+    return `<li class="pillar__row">${parts.join('')}</li>`;
+  };
+  return `<div class="pillars">${list
+    .map(
+      (p, i) => `<section class="pillar" style="--i:${i}">
+        <div class="pillar__head"><span class="pillar__no">${String(i + 1).padStart(2, '0')}</span><h2 class="pillar__title">${esc(p.title)}</h2></div>
+        ${p.text ? `<p class="pillar__text">${esc(p.text)}</p>` : ''}
+        ${p.items?.length ? `<ul class="pillar__items">${p.items.map(row).join('')}</ul>` : ''}
+      </section>`,
+    )
+    .join('')}</div>`;
 }
 
 /* views */
@@ -147,10 +170,16 @@ function viewHome() {
   const hero = `<section class="hero">
     ${s.avatar ? `<div class="hero__avatar thumb"><img class="avatar avatar--main" src="${esc(s.avatar)}" alt="">${s.avatar_pixel ? `<img class="avatar avatar--pixel" src="${esc(s.avatar_pixel)}" alt="">` : ''}</div>` : ''}
     <div>
-      <h1 class="hero__name">${esc(s.owner)}</h1>
+      <div class="hero__top">
+        <div>
+          ${s.eyebrow ? `<p class="hero__eyebrow">${esc(s.eyebrow)}</p>` : ''}
+          <h1 class="hero__name">${esc(s.owner)}</h1>
+        </div>
+        ${s.links?.length ? `<div class="hero__links">${s.links.map((l) => link(l.url, l.label, 'btn')).join('')}</div>` : ''}
+      </div>
       ${s.tagline ? `<p class="hero__tagline">${esc(s.tagline)}</p>` : ''}
-      ${s.intro ? `<p class="hero__intro">${esc(s.intro)}</p>` : ''}
-      ${s.links?.length ? `<div class="hero__links">${s.links.map((l) => link(l.url, l.label, 'btn')).join('')}</div>` : ''}
+      ${s.intro ? s.intro.split(/\n{2,}/).map((t) => `<p class="hero__intro">${esc(t)}</p>`).join('') : ''}
+      ${pillars(s.pillars)}
     </div>
   </section>`;
 
@@ -162,6 +191,7 @@ function viewHome() {
           <h2 class="section__title">${esc(sec.label)}</h2>
           <span class="section__count">${items.length}</span>
         </div>
+        ${sec.description ? `<p class="section__desc">${esc(sec.description)}</p>` : ''}
         ${items.length ? `<div class="grid">${items.map(card).join('')}</div>` : `<p class="empty">${esc(L.empty)}</p>`}
       </section>`;
     })
@@ -194,7 +224,12 @@ async function viewProject(p) {
     </li>`,
     )
     .join('');
-  const logs = sortLogs(p.logs ?? []).map((l) => logItem(p, l)).join('');
+
+  const aboutBlock = about ? `<section class="block"><h2 class="block__title">${esc(L.about)}</h2><div class="prose">${about}</div></section>` : '';
+  const improveBlock = `<section class="block">
+      <h2 class="block__title">${esc(L.improvements)}</h2>
+      ${improvements ? `<ol class="list">${improvements}</ol>` : `<p class="empty">${esc(L.empty)}</p>`}
+    </section>`;
 
   const html = `
     ${crumbs([[L.home, HOME], [p.title]])}
@@ -202,23 +237,17 @@ async function viewProject(p) {
       <h1>${esc(p.title)}</h1>
       ${p.summary ? `<p class="project-head__lead">${esc(p.summary)}</p>` : ''}
       <div class="project-head__meta">
+        ${p.featured ? `<span class="badge badge--featured">${esc(L.featured)}</span>` : ''}
         <span class="badge">${esc(typeLabel(p))}</span>
         ${p.period ? `<span>${esc(p.period)}</span>` : ''}
         ${p.role ? `<span>${esc(p.role)}</span>` : ''}
       </div>
     </header>
-    ${p.thumbnail ? `<div class="project-hero thumb"><img class="thumb--main" src="${esc(p.thumbnail)}" alt="">${p.thumbnail_pixel ? `<img class="thumb--pixel" src="${esc(p.thumbnail_pixel)}" alt="">` : ''}</div>` : ''}
     ${links ? `<div class="project-links">${links}</div>` : ''}
+    ${metricsBlock(p.highlights)}
+    ${p.thumbnail ? `<div class="project-hero thumb"><img class="thumb--main" src="${esc(p.thumbnail)}" alt="">${p.thumbnail_pixel ? `<img class="thumb--pixel" src="${esc(p.thumbnail_pixel)}" alt="">` : ''}</div>` : ''}
     ${p.stack?.length ? `<section class="block"><h2 class="block__title">${esc(L.stack)}</h2>${chips(p.stack)}</section>` : ''}
-    ${about ? `<section class="block"><h2 class="block__title">${esc(L.about)}</h2><div class="prose">${about}</div></section>` : ''}
-    <section class="block">
-      <h2 class="block__title">${esc(L.improvements)}</h2>
-      ${improvements ? `<ol class="list">${improvements}</ol>` : `<p class="empty">${esc(L.empty)}</p>`}
-    </section>
-    <section class="block">
-      <h2 class="block__title">${esc(L.logs)}</h2>
-      ${logs ? `<ul class="list">${logs}</ul>` : `<p class="empty">${esc(L.empty)}</p>`}
-    </section>`;
+    ${p.featured ? improveBlock + aboutBlock : aboutBlock + improveBlock}`;
   return { title: p.title, html };
 }
 
@@ -226,19 +255,7 @@ async function viewImprovement(p, it) {
   const list = p.improvements;
   const idx = list.indexOf(it);
   const body = await md(it);
-  const metrics = it.metrics?.length
-    ? `<div class="metrics">${it.metrics
-        .map(
-          (m) => `<div class="metric">
-        <div class="metric__label">${esc(m.label)}</div>
-        <div class="metric__vals">
-          ${m.before != null ? `<span class="metric__before">${esc(m.before)}</span>` : ''}
-          <span class="metric__after">${esc(m.after)}</span>
-        </div>
-      </div>`,
-        )
-        .join('')}</div>`
-    : '';
+  const metrics = metricsBlock(it.metrics);
   const nav = (x) => x && { href: improveHref(p, x), title: x.title };
 
   const html = `
@@ -252,41 +269,6 @@ async function viewImprovement(p, it) {
     <article class="prose">${body}</article>
     ${pager(nav(list[idx - 1]), nav(list[idx + 1]))}`;
   return { title: `${it.title} - ${p.title}`, html };
-}
-
-async function viewLog(p, l) {
-  const list = sortLogs(p.logs);
-  const idx = list.indexOf(l);
-  const body = await md(l);
-  const nav = (x) => x && { href: logHref(p, x), title: `${x.date} ${x.title}` };
-
-  const html = `
-    ${crumbs([[L.home, HOME], [p.title, projectHref(p)], [L.logs]])}
-    <header class="article-head">
-      <h1>${esc(l.title)}</h1>
-      <p class="article-head__meta"><time datetime="${esc(l.date)}">${esc(l.date)}</time>${l.summary ? `, ${esc(l.summary)}` : ''}</p>
-      ${chips(l.tags)}
-    </header>
-    <article class="prose">${body}</article>
-    ${pager(nav(list[idx + 1]), nav(list[idx - 1]))}`;
-  return { title: `${l.title} - ${p.title}`, html };
-}
-
-function viewLogs() {
-  const groups = data.projects
-    .filter((p) => p.logs?.length)
-    .map(
-      (p) => `<section class="log-group">
-      <h2 class="log-group__title"><a href="${projectHref(p)}">${esc(p.title)}</a></h2>
-      <ul class="list">${sortLogs(p.logs).map((l) => logItem(p, l)).join('')}</ul>
-    </section>`,
-    )
-    .join('');
-  const html = `
-    ${crumbs([[L.home, HOME], [L.all_logs]])}
-    <header class="article-head"><h1>${esc(L.all_logs)}</h1></header>
-    ${groups || `<p class="empty">${esc(L.empty)}</p>`}`;
-  return { title: L.all_logs, html };
 }
 
 const view404 = () => ({
@@ -303,17 +285,11 @@ function resolve(route) {
   switch (route.name) {
     case 'home':
       return viewHome();
-    case 'logs':
-      return viewLogs();
     case 'project':
       return p ? viewProject(p) : view404();
     case 'improvement': {
       const it = p?.improvements?.find((x) => x.id === route.iid);
       return it ? viewImprovement(p, it) : view404();
-    }
-    case 'log': {
-      const l = p?.logs?.find((x) => logId(x) === route.lid);
-      return l ? viewLog(p, l) : view404();
     }
     default:
       return view404();
@@ -369,7 +345,6 @@ async function main() {
   document.title = data.site.title;
   document.getElementById('site-logo').textContent = data.site.title;
   document.querySelector('[data-nav="home"]').textContent = L.nav_home;
-  document.querySelector('[data-nav="logs"]').textContent = L.nav_logs;
   document.getElementById('site-footer').innerHTML = data.site.footer ? renderMarkdown(data.site.footer) : '';
   document.dispatchEvent(new Event('portfolio:ready'));   // boot.js waits for this
 
@@ -387,8 +362,8 @@ async function main() {
       if (!el) return;
       e.preventDefault();
       if (!el.hasAttribute('tabindex')) el.tabIndex = -1;
-      el.focus();
-      el.scrollIntoView();
+      el.focus({ preventScroll: true });
+      el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
       return;
     }
     const url = new URL(a.href);

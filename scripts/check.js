@@ -40,7 +40,6 @@ checkLinks('site', site.links);
 
 const ids = new Set();
 let improvements = 0;
-let logs = 0;
 
 for (const p of data.projects ?? []) {
   const tag = p.id ?? p.title ?? '(unnamed project)';
@@ -75,25 +74,10 @@ for (const p of data.projects ?? []) {
     }
   }
 
-  const lids = new Set();
-  for (const l of p.logs ?? []) {
-    logs++;
-    const id = l.id ?? l.date;
-    const ltag = `${tag}/${id}`;
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(l.date ?? '')) problems.push(`${tag}: log date must be YYYY-MM-DD (${l.date})`);
-    else if (Number.isNaN(Date.parse(l.date))) problems.push(`${tag}: log date is not a real date (${l.date})`);
-    if (lids.has(id)) problems.push(`${tag}: two logs share the same day; give one an explicit id (${id})`);
-    lids.add(id);
-    if (!l.title) problems.push(`${ltag}: title is missing`);
-    await checkFile(ltag, 'file', l.file);
-    if (!l.file && !l.body) problems.push(`${ltag}: needs either file or body`);
-    if (l.file && l.body) problems.push(`${ltag}: use either file or body, not both`);
-    if (l.tags != null && !isStringArray(l.tags)) problems.push(`${ltag}: tags must be an array of strings`);
-  }
 }
 
 if (problems.length) {
   console.error(problems.map((p) => ` - ${p}`).join('\n'));
   process.exit(1);
 }
-console.log(`ok: ${ids.size} projects, ${improvements} improvements, ${logs} logs`);
+console.log(`ok: ${ids.size} projects, ${improvements} improvements`);

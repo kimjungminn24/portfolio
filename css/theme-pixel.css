@@ -133,3 +133,6 @@
 /* thumbnail_pixel replaces the 4K thumbnail */
 [data-theme="pixel"] .thumb img.thumb--pixel { display: block; }
 [data-theme="pixel"] .thumb:has(.thumb--pixel) img.thumb--main { display: none; }
+
+[data-theme="pixel"] .section__count { border-radius: 0; }
+[data-theme="pixel"] .pillar::before { height: 6px; opacity: 1; }
