@@ -69,7 +69,7 @@
         "GitHub Actions",
         "Grafana Cloud"
       ],
-      "period": "2025.06 ~",
+      "period": "2025.06 ~ 현재",
       "role": "1인 개발 · 프론트엔드 / 백엔드 / 인프라",
       "aboutFile": "content/pik-one/about.md",
       "improvements": [
@@ -146,7 +146,28 @@
       ],
       "featured": true,
       "kind": "1인 개발",
-      "card_summary": "피크민 블룸의 단독 스팟을 등록하고 검색할 수 있는 지도 서비스입니다. 지역과 데코 유형으로 장소를 검색할 수 있으며, 하루 평균 800명 이상이 방문하고 있습니다."
+      "card_summary": "피크민 블룸의 단독 스팟을 등록하고 검색할 수 있는 지도 서비스입니다. 지역과 데코 유형으로 장소를 검색할 수 있으며, 하루 평균 800명 이상이 방문하고 있습니다.",
+      "highlights": [
+        {
+          "label": "하루 평균 방문자",
+          "after": "800명+"
+        },
+        {
+          "label": "부하 테스트 실패율",
+          "before": "약 20%",
+          "after": "0%"
+        },
+        {
+          "label": "반경 검색 P95",
+          "before": "9,768ms",
+          "after": "15ms"
+        },
+        {
+          "label": "Lighthouse 평균",
+          "before": "50",
+          "after": "94"
+        }
+      ]
     },
     {
       "id": "core",
