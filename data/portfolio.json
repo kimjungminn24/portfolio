@@ -62,13 +62,6 @@
             "after": "약 1초"
           },
           {
-            "project": "Egg In Health",
-            "href": "p/egg-in-health/improve/ehcache",
-            "label": "조회 응답",
-            "before": "30초",
-            "after": "16.15ms"
-          },
-          {
             "project": "pixel-duet",
             "href": "p/pixel-duet/improve/token-saving",
             "label": "토큰",
