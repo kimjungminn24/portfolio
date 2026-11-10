@@ -78,6 +78,13 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.3; }
 .hero__intro { margin: 0 0 10px; color: var(--ink-2); }
 .hero__intro:last-of-type { margin-bottom: 16px; }
 .hero__links { display: flex; flex-wrap: wrap; gap: 8px; }
+.hero > div { min-width: 0; flex: 1; }
+.cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 4px 0 20px; padding: 0; list-style: none; }
+.case__link { display: block; height: 100%; padding: 14px 16px; text-decoration: none; border: var(--border-w) solid var(--line); border-radius: var(--radius); background: var(--bg); }
+.case__link:hover { border-color: var(--accent); }
+.case__title { margin: 0 0 4px; font-size: 1em; line-height: 1.45; }
+.case__meta { margin: 0 0 8px; color: var(--accent); font-size: .78em; }
+.case__text { margin: 0; color: var(--ink-2); font-size: .88em; line-height: 1.65; }
 
 /* buttons */
 .btn {

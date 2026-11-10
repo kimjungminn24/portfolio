@@ -151,6 +151,13 @@ function viewHome() {
       <h1 class="hero__name">${esc(s.owner)}</h1>
       ${s.tagline ? `<p class="hero__tagline">${esc(s.tagline)}</p>` : ''}
       ${s.intro ? s.intro.split(/\n{2,}/).map((t) => `<p class="hero__intro">${esc(t)}</p>`).join('') : ''}
+      ${s.cases?.length ? `<ul class="cases">${s.cases.map((c) => `<li class="case">
+        <a class="case__link" href="${c.project ? `p/${enc(c.project)}` : '#'}">
+          <h2 class="case__title">${esc(c.title)}</h2>
+          ${c.meta ? `<p class="case__meta">${esc(c.meta)}</p>` : ''}
+          <p class="case__text">${esc(c.text)}</p>
+        </a>
+      </li>`).join('')}</ul>` : ''}
       ${s.links?.length ? `<div class="hero__links">${s.links.map((l) => link(l.url, l.label, 'btn')).join('')}</div>` : ''}
     </div>
   </section>`;
