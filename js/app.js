@@ -12,6 +12,7 @@ const DEFAULT_LABELS = {
   about: 'About',
   improvements: 'Improvements',
   more: 'Read more',
+  featured: 'Featured',
   prev: 'Previous',
   next: 'Next',
   empty: 'Nothing here yet',
@@ -113,9 +114,9 @@ function card(p) {
     <div class="card__thumb thumb">${thumb(p)}</div>
     <div class="card__body">
       <h3 class="card__title">${esc(p.title)}</h3>
-      <p class="card__summary">${esc(p.summary)}</p>
+      <p class="card__summary">${esc(p.card_summary ?? p.summary)}</p>
       ${chips(p.stack)}
-      ${p.period ? `<div class="card__meta">${esc(p.period)}</div>` : ''}
+      ${p.period || p.kind ? `<div class="card__meta">${esc([p.period, p.kind].filter(Boolean).join(' · '))}</div>` : ''}
     </div>
   </a>`;
 }
@@ -128,9 +129,10 @@ function viewHome() {
   const hero = `<section class="hero">
     ${s.avatar ? `<div class="hero__avatar thumb"><img class="avatar avatar--main" src="${esc(s.avatar)}" alt="">${s.avatar_pixel ? `<img class="avatar avatar--pixel" src="${esc(s.avatar_pixel)}" alt="">` : ''}</div>` : ''}
     <div>
+      ${s.eyebrow ? `<p class="hero__eyebrow">${esc(s.eyebrow)}</p>` : ''}
       <h1 class="hero__name">${esc(s.owner)}</h1>
       ${s.tagline ? `<p class="hero__tagline">${esc(s.tagline)}</p>` : ''}
-      ${s.intro ? `<p class="hero__intro">${esc(s.intro)}</p>` : ''}
+      ${s.intro ? s.intro.split(/\n{2,}/).map((t) => `<p class="hero__intro">${esc(t)}</p>`).join('') : ''}
       ${s.links?.length ? `<div class="hero__links">${s.links.map((l) => link(l.url, l.label, 'btn')).join('')}</div>` : ''}
     </div>
   </section>`;
@@ -143,6 +145,7 @@ function viewHome() {
           <h2 class="section__title">${esc(sec.label)}</h2>
           <span class="section__count">${items.length}</span>
         </div>
+        ${sec.description ? `<p class="section__desc">${esc(sec.description)}</p>` : ''}
         ${items.length ? `<div class="grid">${items.map(card).join('')}</div>` : `<p class="empty">${esc(L.empty)}</p>`}
       </section>`;
     })
@@ -182,6 +185,7 @@ async function viewProject(p) {
       <h1>${esc(p.title)}</h1>
       ${p.summary ? `<p class="project-head__lead">${esc(p.summary)}</p>` : ''}
       <div class="project-head__meta">
+        ${p.featured ? `<span class="badge badge--featured">${esc(L.featured)}</span>` : ''}
         <span class="badge">${esc(typeLabel(p))}</span>
         ${p.period ? `<span>${esc(p.period)}</span>` : ''}
         ${p.role ? `<span>${esc(p.role)}</span>` : ''}
