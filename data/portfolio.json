@@ -162,8 +162,8 @@
         },
         {
           "id": "abuse-monitoring",
-          "title": "서버가 다운된 이후, 악성 요청을 차단하고 로그를 추적하기까지",
-          "summary": "외부 부하 테스트로 서비스가 다운되는 일을 겪었습니다. Nginx 접근 로그를 확인해 악성 요청을 파악하고, 차단 규칙과 모니터링 환경을 추가했습니다.",
+          "title": "서버 다운 이후 악성 요청 차단과 로그 모니터링 구축",
+          "summary": "외부에서 대량의 요청이 들어와 서비스가 다운되는 일을 겪었습니다. Nginx 접근 로그로 비정상 요청을 파악해 차단 규칙과 로그 수집 환경을 갖췄습니다.",
           "tags": [
             "보안",
             "운영"
@@ -172,33 +172,21 @@
         },
         {
           "id": "lighthouse",
-          "title": "Lighthouse 평균 점수 50점에서 94점까지",
-          "summary": "이미지와 컴포넌트의 Lazy Loading을 적용하고 불필요한 CSS를 정리했습니다. Lighthouse 평균 점수를 50점에서 94점까지 높였습니다.",
+          "title": "Lighthouse Performance 60점에서 91점까지",
           "tags": [
             "성능",
             "프론트엔드"
           ],
           "metrics": [
             {
-              "label": "평균 점수",
-              "before": "50",
-              "after": "94"
-            },
-            {
               "label": "Performance",
+              "before": "60",
               "after": "91"
             },
             {
-              "label": "Accessibility",
-              "after": "94"
-            },
-            {
               "label": "Best Practices",
+              "before": "75",
               "after": "100"
-            },
-            {
-              "label": "SEO",
-              "after": "92"
             }
           ],
           "file": "content/pik-one/improvements/lighthouse.md"
@@ -223,9 +211,9 @@
           "after": "15ms"
         },
         {
-          "label": "Lighthouse 평균",
-          "before": "50",
-          "after": "94"
+          "label": "Lighthouse Performance",
+          "before": "60",
+          "after": "91"
         }
       ]
     },
