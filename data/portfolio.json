@@ -172,33 +172,21 @@
         },
         {
           "id": "lighthouse",
-          "title": "Lighthouse 평균 점수 50점에서 94점까지",
-          "summary": "이미지와 컴포넌트의 Lazy Loading을 적용하고 불필요한 CSS를 정리했습니다. Lighthouse 평균 점수를 50점에서 94점까지 높였습니다.",
+          "title": "Lighthouse Performance 60점에서 91점까지",
           "tags": [
             "성능",
             "프론트엔드"
           ],
           "metrics": [
             {
-              "label": "평균 점수",
-              "before": "50",
-              "after": "94"
-            },
-            {
               "label": "Performance",
+              "before": "60",
               "after": "91"
             },
             {
-              "label": "Accessibility",
-              "after": "94"
-            },
-            {
               "label": "Best Practices",
+              "before": "75",
               "after": "100"
-            },
-            {
-              "label": "SEO",
-              "after": "92"
             }
           ],
           "file": "content/pik-one/improvements/lighthouse.md"
@@ -223,9 +211,9 @@
           "after": "15ms"
         },
         {
-          "label": "Lighthouse 평균",
-          "before": "50",
-          "after": "94"
+          "label": "Lighthouse Performance",
+          "before": "60",
+          "after": "91"
         }
       ]
     },
